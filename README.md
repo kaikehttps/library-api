@@ -559,8 +559,8 @@ library-api/
 
 ## 👥 Integrantes
 
-- Nome do integrante 1
-- Nome do integrante 2
+- Kaike Ferreira Alves
+- Pedro Victor da Silva Lima
 
 ---
 
