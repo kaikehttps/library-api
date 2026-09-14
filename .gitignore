@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Variaveis de ambiente (NUNCA versionar)
+.env
+.env.local
+
+# Banco de dados SQLite gerado localmente
+*.db
+*.db-journal
+prisma/*.db
+prisma/*.db-journal
+
+# Relatorios de teste / cobertura
+coverage/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
