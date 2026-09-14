@@ -237,7 +237,7 @@ class StudentLoanStrategy extends LoanDeadlineStrategy {
 | **Problema** | Alguém precisa decidir **qual** estratégia usar. Se essa decisão ficar no Use Case, volta o `if/else` que o Strategy veio eliminar. |
 | **Solução**  | Centralizar a seleção em uma fábrica que recebe o tipo do usuário e devolve a estratégia correta.                                   |
 | **Onde**     | `src/domain/strategies/LoanStrategyFactory.js`                                                                                      |
-| **Por quê**  | O Use Case pede a estratégia e recebe algo que respeita o contrato, sem conhecer as classes concretas.                              |
+| **Porquê**  | O Use Case pede a estratégia e recebe algo que respeita o contrato, sem conhecer as classes concretas.                              |
 
 A seleção usa um mapa em vez de `switch`, o que torna a extensão trivial:
 
