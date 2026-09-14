@@ -19,15 +19,7 @@ const TIPOS_USUARIO_VALIDOS = Object.freeze(Object.values(TIPOS_USUARIO));
  * Nao conhece Express, nao conhece Prisma: JavaScript puro.
  */
 class User {
-  constructor({
-    id = null,
-    nome,
-    matricula,
-    email,
-    tipo,
-    createdAt = null,
-    updatedAt = null,
-  }) {
+  constructor({ id = null, nome, matricula, email, tipo, createdAt = null, updatedAt = null }) {
     this.id = id;
     this.nome = nome;
     this.matricula = matricula;

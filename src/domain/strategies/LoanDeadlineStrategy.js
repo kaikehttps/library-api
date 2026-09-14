@@ -22,10 +22,7 @@ class LoanDeadlineStrategy {
    * @returns {number} quantidade de dias de prazo.
    */
   getDiasDePrazo() {
-    throw new AppError(
-      'getDiasDePrazo() deve ser implementado pela estrategia concreta.',
-      500
-    );
+    throw new AppError('getDiasDePrazo() deve ser implementado pela estrategia concreta.', 500);
   }
 
   /**

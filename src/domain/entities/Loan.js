@@ -70,9 +70,7 @@ class Loan {
    */
   statusAtual(dataReferencia = new Date()) {
     if (this.estaDevolvido()) return STATUS_EMPRESTIMO.DEVOLVIDO;
-    return this.estaAtrasado(dataReferencia)
-      ? STATUS_EMPRESTIMO.ATRASADO
-      : STATUS_EMPRESTIMO.ATIVO;
+    return this.estaAtrasado(dataReferencia) ? STATUS_EMPRESTIMO.ATRASADO : STATUS_EMPRESTIMO.ATIVO;
   }
 
   /**
