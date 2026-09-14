@@ -1,0 +1,75 @@
+// Schema do Prisma ORM
+// Documentacao: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// OBSERVACAO IMPORTANTE SOBRE ENUMS
+// ---------------------------------------------------------------------------
+// O provider "sqlite" NAO suporta o tipo `enum` do Prisma (limitacao do banco,
+// nao do ORM). Por isso os campos `tipo` e `status` sao String no banco, e os
+// valores validos sao garantidos em duas camadas:
+//   1. Dominio  -> constantes TIPOS_USUARIO e STATUS_EMPRESTIMO (fonte da verdade)
+//   2. Borda    -> validacao Zod (z.enum) antes de chegar ao Use Case
+// ---------------------------------------------------------------------------
+
+model Book {
+  id                   Int      @id @default(autoincrement())
+  titulo               String
+  autor                String
+  isbn                 String   @unique
+  categoria            String
+  quantidadeTotal      Int
+  quantidadeDisponivel Int
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relacionamento 1:N -> um livro pode ter varios emprestimos
+  emprestimos Loan[]
+
+  @@map("books")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  matricula String   @unique
+  email     String   @unique
+  tipo      String // ALUNO | PROFESSOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamento 1:N -> um usuario pode ter varios emprestimos
+  emprestimos Loan[]
+
+  @@map("users")
+}
+
+model Loan {
+  id                    Int       @id @default(autoincrement())
+  livroId               Int
+  usuarioId             Int
+  dataEmprestimo        DateTime  @default(now())
+  dataDevolucaoPrevista DateTime
+  dataDevolucaoReal     DateTime?
+  status                String    @default("ATIVO") // ATIVO | DEVOLVIDO | ATRASADO
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Um emprestimo pertence a exatamente UM livro e exatamente UM usuario.
+  // onDelete: Restrict impede apagar livro/usuario que ainda possua emprestimos
+  // (o Use Case checa antes e devolve 409 Conflict com uma mensagem amigavel).
+  livro   Book @relation(fields: [livroId], references: [id], onDelete: Restrict)
+  usuario User @relation(fields: [usuarioId], references: [id], onDelete: Restrict)
+
+  @@index([livroId])
+  @@index([usuarioId])
+  @@map("loans")
+}
